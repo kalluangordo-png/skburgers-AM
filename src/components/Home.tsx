@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { ChefHat, Settings, ShoppingCart, Zap, ArrowRight } from 'lucide-react';
 
 const Home: React.FC = () => {
@@ -56,10 +56,10 @@ const Home: React.FC = () => {
                         </div>
                     </div>
 
-                    {/* Botão Call to Action - Agora mais "vibrante" */}
-                    <button 
-                        onClick={() => navigate('/order')}
-                        className="w-full group relative bg-yellow-500 hover:bg-white text-black p-8 md:p-10 rounded-[2.8rem] flex items-center justify-between transition-all duration-500 active:scale-[0.97] shadow-[0_20px_50px_-15px_rgba(234,179,8,0.3)] overflow-hidden"
+                    {/* Botão Call to Action - Agora usando Link para melhor compatibilidade iOS */}
+                    <Link 
+                        to="/order"
+                        className="w-full group relative bg-yellow-500 hover:bg-white text-black p-8 md:p-10 rounded-[2.8rem] flex items-center justify-between transition-all duration-500 active:scale-[0.97] shadow-[0_20px_50px_-15px_rgba(234,179,8,0.3)] overflow-hidden cursor-pointer touch-manipulation"
                     >
                         <div className="relative z-10 flex items-center gap-6">
                             <div className="w-16 h-16 bg-black rounded-[1.4rem] flex items-center justify-center text-yellow-500 group-hover:bg-yellow-500 group-hover:text-white transition-all duration-500 shadow-lg">
@@ -74,7 +74,7 @@ const Home: React.FC = () => {
                         
                         {/* Brilho interno no hover */}
                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-                    </button>
+                    </Link>
                 </div>
 
                 {/* Footer com Staff Hub Discreto */}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   ArrowLeft, Flame, Star, MapPin, Clock, Bike, ChevronRight 
 } from 'lucide-react';
@@ -9,6 +10,7 @@ import { db } from '../../services/firebase';
 import FacebookPixel from '../FacebookPixel';
 
 const CustomerApp: React.FC = () => {
+  const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const [storeConfig, setStoreConfig] = useState<StoreConfig>({
     dailyGoal: 400,
@@ -39,8 +41,8 @@ const CustomerApp: React.FC = () => {
       {/* Botão Voltar Estratégico */}
       <div className="fixed top-8 left-8 z-[100] animate-in fade-in duration-1000">
         <button 
-          onClick={() => window.location.hash = '#/'}
-          className="flex items-center gap-3 bg-zinc-900/50 backdrop-blur-xl border border-white/10 p-3 rounded-2xl text-white/40 hover:text-white transition-all active:scale-90 group"
+          onClick={() => navigate('/')}
+          className="flex items-center gap-3 bg-zinc-900/50 backdrop-blur-xl border border-white/10 p-3 rounded-2xl text-white/40 hover:text-white transition-all active:scale-90 group cursor-pointer touch-manipulation"
         >
           <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
           <span className="text-[10px] font-black uppercase tracking-[0.2em]">Sair</span>
@@ -118,7 +120,7 @@ const CustomerApp: React.FC = () => {
           <button 
               onClick={() => setShowMenu(true)}
               disabled={!storeConfig.aberta}
-              className={`w-full py-8 rounded-[2.5rem] font-black text-xl uppercase tracking-[0.2em] flex items-center justify-center gap-4 transition-all active:scale-95 shadow-2xl
+              className={`w-full py-8 rounded-[2.5rem] font-black text-xl uppercase tracking-[0.2em] flex items-center justify-center gap-4 transition-all active:scale-95 shadow-2xl cursor-pointer touch-manipulation
                 ${storeConfig.aberta 
                   ? 'bg-yellow-500 text-black shadow-yellow-500/20 hover:bg-yellow-400 hover:-translate-y-1' 
                   : 'bg-zinc-800 text-zinc-600 cursor-not-allowed opacity-50'}`}

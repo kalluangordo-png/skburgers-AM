@@ -779,7 +779,7 @@ const Menu: React.FC<MenuProps> = ({ onBack, config }) => {
                   key={p.id}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => handleAddToCartClick(p)}
-                  className="min-w-[280px] bg-zinc-900/80 border border-white/5 rounded-[2.5rem] overflow-hidden flex flex-col group relative shadow-2xl shadow-black/50"
+                  className="min-w-[280px] bg-zinc-900/80 border border-white/5 rounded-[2.5rem] overflow-hidden flex flex-col group relative shadow-2xl shadow-black/50 cursor-pointer touch-manipulation"
                 >
                   <div className="absolute top-4 left-4 z-10">
                     <span className="bg-yellow-500 text-black text-[9px] font-black px-3 py-1 rounded-full uppercase tracking-widest shadow-xl">COMBO</span>
@@ -833,7 +833,8 @@ const Menu: React.FC<MenuProps> = ({ onBack, config }) => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.05 }}
-                  className="glass-card flex gap-4 !p-3 group relative overflow-hidden"
+                  onClick={() => handleAddToCartClick(p)}
+                  className="glass-card flex gap-4 !p-3 group relative overflow-hidden cursor-pointer touch-manipulation active:scale-[0.98] transition-all"
                 >
                     {p.category.toUpperCase().includes('COMBO') && (
                       <div className="absolute -right-8 top-4 rotate-45 bg-yellow-500 text-black text-[7px] font-black px-10 py-1 uppercase tracking-widest shadow-xl z-10">
@@ -874,8 +875,7 @@ const Menu: React.FC<MenuProps> = ({ onBack, config }) => {
                         )}
                       </div>
                       <button 
-                        onClick={() => handleAddToCartClick(p)}
-                        className="w-10 h-10 bg-yellow-500 rounded-xl flex items-center justify-center text-black active:scale-90 transition-all shadow-lg shadow-yellow-500/10 group-hover:bg-yellow-400"
+                        className="w-10 h-10 bg-yellow-500 rounded-xl flex items-center justify-center text-black active:scale-90 transition-all shadow-lg shadow-yellow-500/10 group-hover:bg-yellow-400 touch-manipulation"
                       >
                         <Plus className="w-6 h-6" strokeWidth={3} />
                       </button>
@@ -1199,7 +1199,7 @@ const Menu: React.FC<MenuProps> = ({ onBack, config }) => {
                     <button 
                       onClick={handleFinalizeOrder}
                       disabled={isSubmitting || isOutOfRange}
-                      className="flex-1 py-5 bg-emerald-500 rounded-[2rem] font-black text-black uppercase tracking-widest flex items-center justify-center gap-3 active:scale-95 transition-all disabled:opacity-30"
+                      className="flex-1 py-5 bg-emerald-500 rounded-[2rem] font-black text-black uppercase tracking-widest flex items-center justify-center gap-3 active:scale-95 transition-all disabled:opacity-30 cursor-pointer touch-manipulation"
                     >
                       {isSubmitting ? <Loader2 className="animate-spin" /> : <><CheckCircle2 size={20} /> ENVIAR PEDIDO</>}
                     </button>
