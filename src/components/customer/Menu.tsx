@@ -1073,10 +1073,10 @@ const Menu: React.FC<MenuProps> = ({ onBack, config }) => {
                     <h3 className="text-xs font-black text-zinc-500 uppercase tracking-widest">Como vai pagar?</h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       {[
-                        { id: PaymentMethod.PIX, icon: <Smartphone size={18} />, label: 'PIX (5% OFF)', color: 'border-emerald-500/30' },
+                        { id: PaymentMethod.PIX, icon: <Smartphone size={18} />, label: 'PIX', color: 'border-emerald-500/30' },
                         { id: PaymentMethod.CREDIT, icon: <CreditCard size={18} />, label: 'CRÉDITO', color: 'border-white/5' },
                         { id: PaymentMethod.DEBIT, icon: <CreditCard size={18} />, label: 'DÉBITO', color: 'border-white/5' },
-                        { id: PaymentMethod.CASH, icon: <Banknote size={18} />, label: 'DINHEIRO (5% OFF)', color: 'border-white/5' },
+                        { id: PaymentMethod.CASH, icon: <Banknote size={18} />, label: 'DINHEIRO', color: 'border-white/5' },
                         { id: PaymentMethod.SODEXO, icon: <CreditCard size={18} />, label: 'SODEXO (+10%)', color: 'border-white/5' },
                         { id: PaymentMethod.ALELO, icon: <CreditCard size={18} />, label: 'ALELO (+10%)', color: 'border-white/5' }
                       ].map((m) => (

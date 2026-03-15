@@ -21,11 +21,11 @@ export const META_DIARIA = 400;
 
 /**
  * PAYMENT_ADJUSTMENTS: O que o cliente vê/paga.
- * Ex: -0.05 significa 5% de desconto.
+ * Ex: 0 significa sem ajuste.
  */
 export const PAYMENT_ADJUSTMENTS: Record<string, number> = {
-  PIX: -0.05,
-  CASH: -0.05,
+  PIX: 0,
+  CASH: 0,
   DEBIT: 0,
   CREDIT: 0,
   SODEXO: 0.10,
