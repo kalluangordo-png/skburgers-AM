@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { 
   ArrowLeft, Flame, Star, MapPin, Clock, Bike, ChevronRight 
 } from 'lucide-react';
@@ -117,6 +118,18 @@ const CustomerApp: React.FC = () => {
 
         {/* CTA Principal - O Botão da Fome */}
         <div className="space-y-4">
+          {storeConfig.welcomeMessage && (
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-zinc-900/50 backdrop-blur-md border border-white/5 p-4 rounded-2xl text-center"
+            >
+              <p className="text-[10px] font-black text-yellow-500 uppercase tracking-[0.2em] italic">
+                {storeConfig.welcomeMessage}
+              </p>
+            </motion.div>
+          )}
+          
           <button 
               onClick={() => setShowMenu(true)}
               disabled={!storeConfig.aberta}

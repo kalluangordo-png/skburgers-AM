@@ -32,6 +32,7 @@ export interface StoreConfig {
   addons: { name: string; price: number }[];
   categories?: string[];
   promoText?: string;
+  welcomeMessage?: string;
   deliveryRules?: DeliveryRule[];
   facebookPixelId?: string;
 }

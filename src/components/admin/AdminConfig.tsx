@@ -171,6 +171,19 @@ const AdminConfig: React.FC<AdminConfigProps> = ({ config, onSave, onFixAddress,
             </div>
           </div>
           <div className="space-y-3 md:col-span-2">
+            <label className="text-[10px] font-black text-zinc-500 uppercase tracking-[0.2em] ml-2">Mensagem de Boas-Vindas (Tela Inicial)</label>
+            <div className="flex items-center gap-4 bg-zinc-900 border border-white/5 p-4 rounded-2xl focus-within:border-yellow-500/50 transition-all">
+              <MessageSquare size={20} className="text-yellow-500" />
+              <input 
+                type="text" 
+                value={localConfig.welcomeMessage ?? ''} 
+                onChange={e => setLocalConfig({...localConfig, welcomeMessage: e.target.value})}
+                className="bg-transparent border-none outline-none text-white font-bold w-full text-sm" 
+                placeholder="EX: BEM-VINDO À MELHOR HAMBURGUERIA DE MANAUS!"
+              />
+            </div>
+          </div>
+          <div className="space-y-3 md:col-span-2">
             <label className="text-[10px] font-black text-zinc-500 uppercase tracking-[0.2em] ml-2">Promoção do Dia (Banner no Cardápio)</label>
             <div className="flex items-center gap-4 bg-zinc-900 border border-white/5 p-4 rounded-2xl focus-within:border-yellow-500/50 transition-all">
               <Flame size={20} className="text-yellow-500" />
