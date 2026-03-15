@@ -24,6 +24,8 @@ const Menu: React.FC<MenuProps> = ({ onBack, config }) => {
   const [loadingProducts, setLoadingProducts] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
 
+  const [isSearchingCep, setIsSearchingCep] = useState(false);
+
   // Bebidas disponíveis para o combo (dinâmico baseado no estoque/pausa)
   const availableDrinks = useMemo(() => {
     return allProducts
@@ -127,6 +129,7 @@ const Menu: React.FC<MenuProps> = ({ onBack, config }) => {
     cartItemId?: string;
   } | null>(null);
   const [selectedDrink, setSelectedDrink] = useState<string>('');
+  const { showToast } = useToast();
 
   const [formData, setFormData] = useState({
     nome: '',
@@ -145,36 +148,41 @@ const Menu: React.FC<MenuProps> = ({ onBack, config }) => {
     return `https://maps.google.com/maps?q=${query}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
   }, [formData.endereco, formData.numeroCasa, formData.bairro]);
 
-  const handleCepChange = async (cep: string) => {
-    const cleanCep = cep.replace(/\D/g, '');
+  const handleCepChange = useCallback(async (cep: string) => {
+    const cleanCep = cep.replace(/\D/g, '').slice(0, 8);
     setFormData(prev => ({ ...prev, cep: cleanCep }));
 
-    if (cleanCep.length === 8) {
+    if (cleanCep.length === 8 && !isSearchingCep) {
+      setIsSearchingCep(true);
       try {
         const response = await fetch(`https://viacep.com.br/ws/${cleanCep}/json/`);
+        if (!response.ok) throw new Error('Falha na rede');
         const data = await response.json();
         
         if (!data.erro) {
           // Restrição Geográfica: Foco em Manaus
-          if (data.localidade.toUpperCase() !== 'MANAUS') {
-            showToast("CEP não localizado ou fora da área de atuação (Manaus apenas)", "error");
+          if (data.localidade && data.localidade.toUpperCase() !== 'MANAUS') {
+            showToast("Atendemos apenas em Manaus!", "error");
+            setIsSearchingCep(false);
             return;
           }
 
           setFormData(prev => ({
             ...prev,
-            endereco: data.logradouro.toUpperCase(),
-            bairro: data.bairro.toUpperCase()
+            endereco: (data.logradouro || '').toUpperCase(),
+            bairro: (data.bairro || '').toUpperCase()
           }));
-          showToast("Endereço preenchido!", "success");
+          showToast("Endereço localizado!", "success");
         } else {
-          showToast("CEP não encontrado. Preencha manualmente.", "info");
+          showToast("CEP não encontrado.", "info");
         }
       } catch (error) {
-        showToast("Erro ao buscar CEP.", "error");
+        console.error("Erro Viacep:", error);
+      } finally {
+        setIsSearchingCep(false);
       }
     }
-  };
+  }, [isSearchingCep, showToast]);
 
   // Garantir que temos uma categoria ativa válida
   useEffect(() => {
@@ -226,8 +234,6 @@ const Menu: React.FC<MenuProps> = ({ onBack, config }) => {
       return cat.includes('ACOMPANHAMENTO') || cat.includes('PORÇÃO') || cat.includes('PORCAO');
     }).slice(0, 6);
   }, [allProducts]);
-
-  const { showToast } = useToast();
 
   const addToCart = (product: { 
     id: string; 
@@ -971,7 +977,7 @@ const Menu: React.FC<MenuProps> = ({ onBack, config }) => {
               )}
 
               {checkoutStep === 'form' && (
-                <div className="space-y-8 animate-in slide-in-from-bottom-4 duration-500">
+                <div key="checkout-form" className="space-y-8 animate-in slide-in-from-bottom-4 duration-500">
                   <div className="space-y-4">
                     <h3 className="text-xs font-black text-zinc-500 uppercase tracking-widest">Informações de Entrega</h3>
                     <div className="space-y-3">
@@ -982,19 +988,32 @@ const Menu: React.FC<MenuProps> = ({ onBack, config }) => {
                         className="w-full bg-zinc-900 border border-white/5 p-5 rounded-2xl text-white font-black text-xs outline-none focus:border-yellow-500 transition-all"
                       />
                       <input 
+                        type="tel"
+                        inputMode="numeric"
+                        autoComplete="tel"
                         placeholder="WHATSAPP (DDD + NÚMERO) (OBRIGATÓRIO)"
                         value={formData.whatsapp}
-                        onChange={e => setFormData({...formData, whatsapp: e.target.value})}
+                        onChange={e => setFormData({...formData, whatsapp: e.target.value.replace(/\D/g, '')})}
                         className="w-full bg-zinc-900 border border-white/5 p-5 rounded-2xl text-white font-black text-xs outline-none focus:border-yellow-500 transition-all"
                       />
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <input 
-                          placeholder="CEP (OBRIGATÓRIO)"
-                          value={formData.cep}
-                          onChange={e => handleCepChange(e.target.value)}
-                          maxLength={8}
-                          className="w-full bg-zinc-900 border border-white/5 p-5 rounded-2xl text-white font-black text-xs outline-none focus:border-yellow-500 transition-all"
-                        />
+                        <div className="relative">
+                          <input 
+                            type="tel"
+                            inputMode="numeric"
+                            autoComplete="postal-code"
+                            placeholder="CEP (OBRIGATÓRIO)"
+                            value={formData.cep}
+                            onChange={e => handleCepChange(e.target.value)}
+                            maxLength={8}
+                            className="w-full bg-zinc-900 border border-white/5 p-5 rounded-2xl text-white font-black text-xs outline-none focus:border-yellow-500 transition-all"
+                          />
+                          {isSearchingCep && (
+                            <div className="absolute right-4 top-1/2 -translate-y-1/2">
+                              <Loader2 className="animate-spin text-yellow-500" size={16} />
+                            </div>
+                          )}
+                        </div>
                         <input 
                           placeholder="Nº DA CASA"
                           value={formData.numeroCasa}
