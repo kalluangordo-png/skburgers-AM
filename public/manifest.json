@@ -1,0 +1,25 @@
+{
+  "short_name": "SK Burgers",
+  "name": "SK Burgers Premium - Manaus",
+  "description": "O melhor burger de Manaus agora no seu celular!",
+  "icons": [
+    {
+      "src": "https://i.postimg.cc/6p19JCWR/Gemini-Generated-Image-u73pfku73pfku73p-(1)-(1).png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://i.postimg.cc/6p19JCWR/Gemini-Generated-Image-u73pfku73pfku73p-(1)-(1).png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#000000",
+  "background_color": "#000000",
+  "categories": ["food", "shopping"]
+}

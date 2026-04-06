@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="SK BURGERS" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" href="https://i.postimg.cc/6p19JCWR/Gemini-Generated-Image-u73pfku73pfku73p-(1)-(1).png">
+    <link rel="apple-touch-icon" href="https://i.postimg.cc/6p19JCWR/Gemini-Generated-Image-u73pfku73pfku73p-(1)-(1).png">
+    
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js?v=2')
+            .then(reg => {
+              console.log('SW registered');
+              reg.onupdatefound = () => {
+                const installingWorker = reg.installing;
+                if (installingWorker == null) return;
+                installingWorker.onstatechange = () => {
+                  if (installingWorker.state === 'installed') {
+                    if (navigator.serviceWorker.controller) {
+                      console.log('New content available; please refresh.');
+                      window.location.reload();
+                    }
+                  }
+                };
+              };
+            })
+            .catch(err => console.log('SW error', err));
+        });
+      }
+    </script>
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="SK BURGERS | O Autêntico Sabor Premium de Manaus" />
+    <meta property="og:description" content="Peça o melhor burger de Manaus agora! Ingredientes selecionados, sabor inigualável e entrega rápida." />
+    <meta property="og:image" content="https://i.postimg.cc/6p19JCWR/Gemini-Generated-Image-u73pfku73pfku73p-(1)-(1).png" />
+    <meta property="og:url" content="https://skburgers.com.br" />
+    <meta property="og:site_name" content="SK BURGERS" />
+
+    <!-- WhatsApp / Telegram -->
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <title>SK Burgers Premium | Manaus</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
