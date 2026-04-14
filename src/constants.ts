@@ -1,7 +1,10 @@
 export const LOJA_COORDS = { lat: -3.023235, lng: -59.957521 };
 export const LOJA_CEP = "69098-420";
 export const LOJA_BAIRRO = "Nucleo 16";
+<<<<<<< HEAD
 export const LOJA_ENDERECO = "Travessa Caxias, 21";
+=======
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
 
 /** * Limite de Entrega: 5.6km
  * Abrange bem o Nucleo 16 e partes do Cidade Nova / Monte das Oliveiras.

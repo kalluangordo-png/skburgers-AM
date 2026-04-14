@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Download, X } from 'lucide-react';
+<<<<<<< HEAD
 import { motion, AnimatePresence } from 'motion/react';
+=======
+import { motion, AnimatePresence } from 'framer-motion';
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
 
 const PWAInstallPrompt: React.FC = () => {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);

@@ -1,7 +1,11 @@
 import React from 'react';
 import { Plus } from 'lucide-react';
 import { formatCurrency } from '../../utils';
+<<<<<<< HEAD
 import { motion } from 'motion/react';
+=======
+import { motion } from 'framer-motion';
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
 import { Product } from '../../types';
 
 interface CartQuickSidesProps {

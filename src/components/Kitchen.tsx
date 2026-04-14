@@ -4,7 +4,11 @@ import {
   ArrowLeft, Loader2, Flame, Volume2, VolumeX,
   Timer, User, Hash, MessageSquare, Check
 } from 'lucide-react';
+<<<<<<< HEAD
 import { motion, AnimatePresence } from 'motion/react';
+=======
+import { motion, AnimatePresence } from 'framer-motion';
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
 import { cn } from '../services/utils';
 import { Link } from 'react-router-dom';
 import { 

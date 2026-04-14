@@ -1,6 +1,10 @@
 import React, { useState, useMemo, useEffect, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+<<<<<<< HEAD
 import { motion, AnimatePresence } from 'motion/react';
+=======
+import { motion, AnimatePresence } from 'framer-motion';
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
 import { 
   ShoppingCart, Plus, ChevronRight, ArrowLeft, 
   MapPinned, MapPin, Loader2, Smartphone, CreditCard, Banknote, 
@@ -29,6 +33,17 @@ const Menu: React.FC<MenuProps> = ({ onBack, config }) => {
 
   const [isSearchingCep, setIsSearchingCep] = useState(false);
 
+<<<<<<< HEAD
+=======
+  // Bebidas disponíveis para o combo (dinâmico baseado no estoque/pausa)
+  const availableDrinks = useMemo(() => {
+    return allProducts
+      .filter(p => (p.category || '').toUpperCase().includes('BEBIDA'))
+      .map(p => p.name)
+      .sort();
+  }, [allProducts]);
+
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
   // Sincronização em tempo real dos produtos
   useEffect(() => {
     const q = query(
@@ -126,6 +141,7 @@ const Menu: React.FC<MenuProps> = ({ onBack, config }) => {
     cartItemId?: string;
   } | null>(null);
   const [selectedDrink, setSelectedDrink] = useState<string>('');
+<<<<<<< HEAD
 
   // Bebidas disponíveis para o combo (dinâmico baseado no estoque/pausa)
   const availableDrinks = useMemo(() => {
@@ -141,6 +157,8 @@ const Menu: React.FC<MenuProps> = ({ onBack, config }) => {
     return drinks.sort();
   }, [allProducts, selectedProductForDrink]);
 
+=======
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
   const { showToast } = useToast();
 
   const [formData, setFormData] = useState({
@@ -340,6 +358,7 @@ const Menu: React.FC<MenuProps> = ({ onBack, config }) => {
   };
 
   const handleAddToCartClick = (product: Product) => {
+<<<<<<< HEAD
     const category = (product.category || '').toUpperCase().trim();
     const comboCategories = (config.comboCategories || []).map(c => c.toUpperCase().trim());
     
@@ -357,6 +376,24 @@ const Menu: React.FC<MenuProps> = ({ onBack, config }) => {
     const surcharge = config.comboSurcharge || 12;
     const comboPrice = product.priceCombo || (product.price + surcharge);
 
+=======
+    const category = (product.category || '').toLowerCase();
+    const isExcluded = category.includes('bebida') || category.includes('sobremesa') || category.includes('doce') || category.includes('acompanhamento') || category.includes('porção') || category.includes('porcao');
+    const isAlreadyCombo = product.name.toLowerCase().includes('combo') || category.includes('combo');
+
+    // Se for bebida ou sobremesa, adiciona direto (ou abre seleção de bebida se for combo de bebida?)
+    if (isExcluded) {
+      addToCart(product);
+      return;
+    }
+
+    // TUDO AGORA É COMBO (Exceto excluídos acima)
+    // Se o produto já tem um preço de combo definido no banco, usa ele.
+    // Caso contrário, adiciona a taxa padrão de combo (R$ 12,00).
+    const comboPrice = product.priceCombo || (product.price + 12);
+
+    // Abre o modal de personalização (adicionais), mas o destino final será a seleção de bebida
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
     setComboItem({
       ...product,
       price: comboPrice // Define o preço base como o preço do combo
@@ -660,6 +697,7 @@ const Menu: React.FC<MenuProps> = ({ onBack, config }) => {
 
   const handleUpgradeToCombo = (itemId: string) => {
     const item = cart.find(i => i.id === itemId);
+<<<<<<< HEAD
     const product = allProducts.find(p => p.id === itemId);
     const surcharge = config.comboSurcharge || 12;
 
@@ -685,6 +723,12 @@ const Menu: React.FC<MenuProps> = ({ onBack, config }) => {
       setSelectedProductForDrink({
         product: product,
         price: totalPrice,
+=======
+    if (item) {
+      setSelectedProductForDrink({
+        product: item,
+        price: item.price + 12,
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
         isCombo: true,
         addons: item.addons || [],
         cartItemId: itemId
@@ -734,7 +778,10 @@ const Menu: React.FC<MenuProps> = ({ onBack, config }) => {
       const comanda = Math.floor(1000 + Math.random() * 9000).toString();
       
       // Inteligência Fiscal: Separação de itens para ST (Substituição Tributária) no Admin
+<<<<<<< HEAD
       const surcharge = config.comboSurcharge || 12;
+=======
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
       const processedItens = cart.flatMap(i => {
         if (i.isCombo) {
           return [
@@ -742,7 +789,11 @@ const Menu: React.FC<MenuProps> = ({ onBack, config }) => {
               id: i.id, 
               name: i.name.toUpperCase(), 
               qtd: i.quantity, 
+<<<<<<< HEAD
               price: i.price - surcharge,
+=======
+              price: i.price - 12,
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
               category: i.category,
               isComboPart: true,
               isCombo: true,
@@ -753,7 +804,11 @@ const Menu: React.FC<MenuProps> = ({ onBack, config }) => {
               id: `upgrade_${i.id}`,
               name: `UPGRADE COMBO (BATATA + ${i.bebida || 'REFRI'})`,
               qtd: i.quantity,
+<<<<<<< HEAD
               price: surcharge,
+=======
+              price: 12,
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
               category: 'Acompanhamento',
               isComboUpgrade: true,
               hasST: true,
@@ -1034,10 +1089,14 @@ const Menu: React.FC<MenuProps> = ({ onBack, config }) => {
               <p className="text-[10px] font-black uppercase tracking-widest">Nenhum item encontrado</p>
             </div>
           ) : (
+<<<<<<< HEAD
             filteredProducts.map((p, index) => {
                 const isComboCategory = config.comboCategories?.includes(p.category.toUpperCase()) || p.category.toUpperCase() === 'COMBOS';
                 
                 return (
+=======
+            filteredProducts.map((p, index) => (
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
                 <motion.div 
                   key={p.id}
                   initial={{ opacity: 0, y: 20 }}
@@ -1069,13 +1128,21 @@ const Menu: React.FC<MenuProps> = ({ onBack, config }) => {
                     <div>
                       <div className="flex items-center gap-2">
                         <h3 className="font-bold text-white uppercase italic text-sm">{p.name}</h3>
+<<<<<<< HEAD
                         {isComboCategory && (
+=======
+                        {!(p.category.toLowerCase().includes('bebida') || p.category.toLowerCase().includes('sobremesa')) && (
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
                           <span className="bg-yellow-500 text-black text-[7px] font-black px-1.5 py-0.5 rounded-full border border-yellow-500/20 uppercase tracking-widest">Combo Incluso</span>
                         )}
                       </div>
                       <p className="text-zinc-500 text-[10px] mt-1 leading-relaxed">
                         {p.description}
+<<<<<<< HEAD
                         {isComboCategory && (
+=======
+                        {!(p.category.toLowerCase().includes('bebida') || p.category.toLowerCase().includes('sobremesa')) && (
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
                           <span className="text-yellow-500 font-bold block mt-1">🍟 + 🥤 Inclusos</span>
                         )}
                       </p>
@@ -1084,12 +1151,21 @@ const Menu: React.FC<MenuProps> = ({ onBack, config }) => {
                       <div className="flex flex-col leading-none">
                         <span className="text-yellow-500 font-black text-base italic">
                           {formatCurrency(
+<<<<<<< HEAD
                             isComboCategory 
                             ? (p.priceCombo || p.price + (config.comboSurcharge || 12))
                             : (p.price || p.priceCombo || 0)
                           )}
                         </span>
                         {isComboCategory && (
+=======
+                            (p.category.toLowerCase().includes('bebida') || p.category.toLowerCase().includes('sobremesa') || p.category.toLowerCase().includes('acompanhamento')) 
+                            ? p.price 
+                            : (p.priceCombo || p.price + 12)
+                          )}
+                        </span>
+                        {!(p.category.toLowerCase().includes('bebida') || p.category.toLowerCase().includes('sobremesa') || p.category.toLowerCase().includes('acompanhamento')) && (
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
                           <span className="text-[8px] font-black text-zinc-600 uppercase tracking-widest mt-0.5">Preço do Combo Completo</span>
                         )}
                       </div>
@@ -1101,8 +1177,12 @@ const Menu: React.FC<MenuProps> = ({ onBack, config }) => {
                     </div>
                   </div>
                 </motion.div>
+<<<<<<< HEAD
               );
             })
+=======
+              ))
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
           )}
         </div>
       </main>
@@ -1625,6 +1705,7 @@ const Menu: React.FC<MenuProps> = ({ onBack, config }) => {
                   <button 
                     onClick={() => {
                       const addonTotal = selectedAddons.reduce((acc, a) => acc + a.price, 0);
+<<<<<<< HEAD
                       const totalPrice = (comboItem?.price || 0) + addonTotal;
 
                       if (comboItem?.fixedDrink) {
@@ -1643,6 +1724,11 @@ const Menu: React.FC<MenuProps> = ({ onBack, config }) => {
                       setSelectedProductForDrink({
                         product: comboItem,
                         price: totalPrice,
+=======
+                      setSelectedProductForDrink({
+                        product: comboItem,
+                        price: comboItem.price + addonTotal,
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
                         isCombo: true,
                         addons: selectedAddons
                       });
@@ -1679,9 +1765,13 @@ const Menu: React.FC<MenuProps> = ({ onBack, config }) => {
                     </div>
                     <div>
                       <h3 className="text-lg font-black text-white uppercase italic tracking-tighter">Combo Especial SK 🍔🍟🥤</h3>
+<<<<<<< HEAD
                       <p className="text-[8px] text-zinc-500 font-bold uppercase tracking-widest">
                         Hambúrguer + Batata Média + {selectedProductForDrink?.product?.drinkCategory ? `Bebida (${selectedProductForDrink.product.drinkCategory})` : 'Bebida'}
                       </p>
+=======
+                      <p className="text-[8px] text-zinc-500 font-bold uppercase tracking-widest">Hambúrguer + Batata Média + Bebida</p>
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
                     </div>
                   </div>
                   <button onClick={() => setSelectedProductForDrink(null)} className="text-zinc-500">

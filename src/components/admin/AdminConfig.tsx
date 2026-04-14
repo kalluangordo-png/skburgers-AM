@@ -7,8 +7,12 @@ import {
 import { StoreConfig } from '../../types';
 import { useToast } from '../ToastContext';
 import { formatCurrency } from '../../utils';
+<<<<<<< HEAD
 import { cn } from '../../services/utils';
 import { MAX_DELIVERY_RADIUS_KM, LOJA_COORDS } from '../../constants';
+=======
+import { MAX_DELIVERY_RADIUS_KM } from '../../constants';
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
 
 interface AdminConfigProps {
   config: StoreConfig;
@@ -20,8 +24,11 @@ interface AdminConfigProps {
 
 const AdminConfig: React.FC<AdminConfigProps> = ({ config, onSave, onFixAddress, onUseCurrentLocation, isSaving }) => {
   const [localConfig, setLocalConfig] = useState<StoreConfig>(config);
+<<<<<<< HEAD
   const [latStr, setLatStr] = useState(config.storeCoords?.lat?.toString() || '');
   const [lngStr, setLngStr] = useState(config.storeCoords?.lng?.toString() || '');
+=======
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
   const [showPins, setShowPins] = useState(false);
   const [isSeeding, setIsSeeding] = useState(false);
   const { showToast } = useToast();
@@ -29,12 +36,17 @@ const AdminConfig: React.FC<AdminConfigProps> = ({ config, onSave, onFixAddress,
   useEffect(() => {
     setLocalConfig({
       ...config,
+<<<<<<< HEAD
       deliveryRules: config.deliveryRules || [],
       comboCategories: config.comboCategories || [],
       comboSurcharge: config.comboSurcharge || 12
     });
     setLatStr(config.storeCoords?.lat?.toString() || '');
     setLngStr(config.storeCoords?.lng?.toString() || '');
+=======
+      deliveryRules: config.deliveryRules || []
+    });
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
   }, [config]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -373,6 +385,7 @@ const AdminConfig: React.FC<AdminConfigProps> = ({ config, onSave, onFixAddress,
           </div>
         </div>
 
+<<<<<<< HEAD
         {/* Configurações de Combo */}
         <div className="pt-6 border-t border-white/5 space-y-6">
           <div className="ml-2">
@@ -425,6 +438,8 @@ const AdminConfig: React.FC<AdminConfigProps> = ({ config, onSave, onFixAddress,
           </div>
         </div>
 
+=======
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
         {/* Configuração da Sede */}
         <div className="pt-6 border-t border-white/5 space-y-4">
           <div className="ml-2">
@@ -481,6 +496,7 @@ const AdminConfig: React.FC<AdminConfigProps> = ({ config, onSave, onFixAddress,
               <label className="text-[8px] font-black text-zinc-600 uppercase ml-2">Latitude</label>
               <input 
                 type="text" 
+<<<<<<< HEAD
                 value={latStr} 
                 onChange={(e) => {
                   setLatStr(e.target.value);
@@ -492,6 +508,13 @@ const AdminConfig: React.FC<AdminConfigProps> = ({ config, onSave, onFixAddress,
                     });
                   }
                 }}
+=======
+                value={localConfig.storeCoords?.lat || ''} 
+                onChange={(e) => setLocalConfig({
+                  ...localConfig, 
+                  storeCoords: { ...(localConfig.storeCoords || {lng: 0}), lat: parseFloat(e.target.value) || 0 }
+                })}
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
                 placeholder="-3.000000"
                 className="w-full bg-zinc-900 border border-white/5 p-3 rounded-xl text-white text-xs outline-none focus:border-yellow-500/50 font-bold"
               />
@@ -500,6 +523,7 @@ const AdminConfig: React.FC<AdminConfigProps> = ({ config, onSave, onFixAddress,
               <label className="text-[8px] font-black text-zinc-600 uppercase ml-2">Longitude</label>
               <input 
                 type="text" 
+<<<<<<< HEAD
                 value={lngStr} 
                 onChange={(e) => {
                   setLngStr(e.target.value);
@@ -511,6 +535,13 @@ const AdminConfig: React.FC<AdminConfigProps> = ({ config, onSave, onFixAddress,
                     });
                   }
                 }}
+=======
+                value={localConfig.storeCoords?.lng || ''} 
+                onChange={(e) => setLocalConfig({
+                  ...localConfig, 
+                  storeCoords: { ...(localConfig.storeCoords || {lat: 0}), lng: parseFloat(e.target.value) || 0 }
+                })}
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
                 placeholder="-59.000000"
                 className="w-full bg-zinc-900 border border-white/5 p-3 rounded-xl text-white text-xs outline-none focus:border-yellow-500/50 font-bold"
               />
@@ -542,6 +573,7 @@ const AdminConfig: React.FC<AdminConfigProps> = ({ config, onSave, onFixAddress,
             <button 
               type="button"
               onClick={() => {
+<<<<<<< HEAD
                 const url = `https://www.google.com/maps/search/?api=1&query=${localConfig.storeCoords?.lat},${localConfig.storeCoords?.lng}`;
                 window.open(url, '_blank');
               }}
@@ -559,6 +591,13 @@ const AdminConfig: React.FC<AdminConfigProps> = ({ config, onSave, onFixAddress,
                   });
                   setLatStr(LOJA_COORDS.lat.toString());
                   setLngStr(LOJA_COORDS.lng.toString());
+=======
+                if (window.confirm("Isso voltará para as coordenadas padrão do Núcleo 16. Confirmar?")) {
+                  setLocalConfig({
+                    ...localConfig,
+                    storeCoords: { lat: -3.043288, lng: -59.963138 }
+                  });
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
                 }
               }}
               className="w-fit bg-zinc-800 hover:bg-zinc-700 text-zinc-400 px-4 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all"

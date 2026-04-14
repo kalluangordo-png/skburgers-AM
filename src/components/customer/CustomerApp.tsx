@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+<<<<<<< HEAD
 import { motion } from 'motion/react';
+=======
+import { motion } from 'framer-motion';
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
 import { 
   ArrowLeft, Flame, Star, MapPin, Clock, Bike, ChevronRight 
 } from 'lucide-react';

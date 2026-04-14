@@ -1,5 +1,9 @@
 import React, { useMemo, useState, useEffect } from 'react';
+<<<<<<< HEAD
 import { TrendingUp, Target, DollarSign, AlertCircle, ShoppingCart, ShieldCheck, MessageSquare, Printer, MapPin } from 'lucide-react';
+=======
+import { TrendingUp, Target, DollarSign, AlertCircle, ShoppingCart, ShieldCheck, MessageSquare, Printer } from 'lucide-react';
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { Order, StoreConfig, PaymentMethod } from '../../types';
 import { DIARIA_MOTOBOY, DIARIA_CHAPEIRO, GATEWAY_FEES, STAFF_COSTS } from '../../constants';
@@ -100,6 +104,7 @@ const AdminDashboard: React.FC<Props> = ({ orders, config }) => {
         <StatCard title="Faturamento Bruto" value={formatCurrency(stats.bruto)} icon={DollarSign} />
         <StatCard title="Lucro Líquido" value={formatCurrency(stats.liquido)} icon={TrendingUp} highlight />
         <StatCard title="Total Pedidos" value={stats.pedidos.toString()} icon={ShoppingCart} />
+<<<<<<< HEAD
         <StatCard 
           title="Sede SK BURGERS" 
           value={`${config.storeCoords?.lat?.toFixed(4) || '???'}, ${config.storeCoords?.lng?.toFixed(4) || '???'}`} 
@@ -118,6 +123,9 @@ const AdminDashboard: React.FC<Props> = ({ orders, config }) => {
             </div>
           }
         />
+=======
+        <StatCard title="Meta Diária" value={formatCurrency(config.dailyGoal)} icon={Target} />
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
       </div>
 
       {/* Barra de Progresso da Meta */}
@@ -204,14 +212,21 @@ const AdminDashboard: React.FC<Props> = ({ orders, config }) => {
 };
 
 // Componente Interno de Card de Estatística
+<<<<<<< HEAD
 const StatCard = ({ title, value, icon: Icon, highlight, subtitle }: any) => (
+=======
+const StatCard = ({ title, value, icon: Icon, highlight }: any) => (
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
   <div className={`${highlight ? 'bg-yellow-500 text-black' : 'glass text-white'} p-8 rounded-[2.5rem] relative overflow-hidden group hover:-translate-y-1 transition-all duration-300`}>
     <div className={`${highlight ? 'bg-black/10' : 'bg-white/5'} w-14 h-14 rounded-2xl flex items-center justify-center mb-6`}>
       <Icon size={28} />
     </div>
     <p className={`text-[10px] font-black uppercase tracking-widest mb-2 ${highlight ? 'text-black/60' : 'text-zinc-500'}`}>{title}</p>
     <h4 className="text-3xl font-black italic tracking-tighter">{value}</h4>
+<<<<<<< HEAD
     {subtitle && <p className={`text-[9px] font-bold uppercase mt-2 ${highlight ? 'text-black/40' : 'text-zinc-600'}`}>{subtitle}</p>}
+=======
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
   </div>
 );
 

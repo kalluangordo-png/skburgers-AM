@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
+<<<<<<< HEAD
 import { motion } from 'motion/react';
+=======
+import { motion } from 'framer-motion';
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
 import { LayoutDashboard, Lock, ArrowLeft, Settings, ChefHat, Utensils, ClipboardList, Loader2, Rocket } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { cn } from '../../services/utils';

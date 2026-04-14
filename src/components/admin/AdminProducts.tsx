@@ -45,8 +45,11 @@ const AdminProducts: React.FC<AdminProductsProps> = ({
     description: '',
     category: 'Burgers',
     image: '',
+<<<<<<< HEAD
     fixedDrink: '',
     drinkCategory: '',
+=======
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
   });
 
   useEffect(() => {
@@ -62,8 +65,11 @@ const AdminProducts: React.FC<AdminProductsProps> = ({
       description: '',
       category: 'Burgers',
       image: '',
+<<<<<<< HEAD
       fixedDrink: '',
       drinkCategory: '',
+=======
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
     });
     setIsModalOpen(true);
   };
@@ -77,15 +83,22 @@ const AdminProducts: React.FC<AdminProductsProps> = ({
       description: product.description || '',
       category: product.category || 'Burgers',
       image: product.image || '',
+<<<<<<< HEAD
       fixedDrink: product.fixedDrink || '',
       drinkCategory: product.drinkCategory || '',
+=======
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
     });
     setIsModalOpen(true);
   };
 
   const handleSaveProduct = async (e: React.FormEvent) => {
     e.preventDefault();
+<<<<<<< HEAD
     if (!formData.name || (formData.price === 0 && !formData.priceCombo)) return showToast("Nome e pelo menos um preço são obrigatórios", "error");
+=======
+    if (!formData.name || !formData.price) return showToast("Nome e Preço são obrigatórios", "error");
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
     
     setIsSubmitting(true);
     try {
@@ -105,8 +118,11 @@ const AdminProducts: React.FC<AdminProductsProps> = ({
         description: formData.description || '',
         category: category,
         image: formData.image || '',
+<<<<<<< HEAD
         fixedDrink: formData.fixedDrink || '',
         drinkCategory: formData.drinkCategory || '',
+=======
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
         updatedAt: serverTimestamp() 
       };
 
@@ -263,8 +279,11 @@ const AdminProducts: React.FC<AdminProductsProps> = ({
                 <div className="flex flex-col">
                   <span className="text-[14px] text-yellow-500 font-black italic">{formatCurrency(prod.price)}</span>
                   {prod.priceCombo && <span className="text-[10px] text-emerald-500 font-bold uppercase">Combo: {formatCurrency(prod.priceCombo)}</span>}
+<<<<<<< HEAD
                   {prod.fixedDrink && <span className="text-[8px] text-zinc-400 font-bold uppercase block mt-1">🥤 Fixa: {prod.fixedDrink}</span>}
                   {prod.drinkCategory && <span className="text-[8px] text-zinc-400 font-bold uppercase block mt-1">🥤 Filtro: {prod.drinkCategory}</span>}
+=======
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
                 </div>
                 <button onClick={() => onDelete(prod.id)} className="p-2 text-zinc-700 hover:text-red-500 transition-colors">
                   <Trash2 size={18} />
@@ -503,6 +522,10 @@ const AdminProducts: React.FC<AdminProductsProps> = ({
                         value={formData.price ?? 0}
                         onChange={e => setFormData({...formData, price: Number(e.target.value)})}
                         className="w-full bg-zinc-900 border border-white/5 rounded-2xl p-4 text-white font-bold focus:border-yellow-500 outline-none"
+<<<<<<< HEAD
+=======
+                        required
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
                       />
                     </div>
                     <div className="space-y-2">
@@ -550,6 +573,7 @@ const AdminProducts: React.FC<AdminProductsProps> = ({
                       placeholder="Descreva os ingredientes..."
                     />
                   </div>
+<<<<<<< HEAD
 
                   {/* Configurações de Bebida do Combo */}
                   <div className="p-6 bg-zinc-900/50 border border-white/5 rounded-[2rem] space-y-4">
@@ -583,6 +607,8 @@ const AdminProducts: React.FC<AdminProductsProps> = ({
                       </div>
                     </div>
                   </div>
+=======
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
                 </div>
               </div>
 

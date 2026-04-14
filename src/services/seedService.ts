@@ -42,7 +42,11 @@ export const seedInitialData = async () => {
     ],
     deliveryFeeBase: 7,
     cep: '69098-420',
+<<<<<<< HEAD
     storeAddress: 'Travessa Caxias',
+=======
+    storeAddress: 'Rua 186',
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
     storeNumber: '21',
     storeNeighborhood: 'Núcleo 16',
     storeCoords: { lat: -3.023235, lng: -59.957521 },
@@ -51,9 +55,13 @@ export const seedInitialData = async () => {
       { maxKm: 4, price: 7.00 },
       { maxKm: 5.5, price: 9.00 }
     ],
+<<<<<<< HEAD
     facebookPixelId: '901951425686685',
     comboCategories: ['COMBOS', 'Burgers'],
     comboSurcharge: 12
+=======
+    facebookPixelId: '901951425686685'
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
   }, { merge: true });
 
   await batch.commit();

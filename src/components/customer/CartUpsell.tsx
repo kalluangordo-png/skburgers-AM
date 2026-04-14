@@ -2,7 +2,11 @@ import React from 'react';
 import { Product, StoreConfig } from '../../types';
 import { Flame, IceCream, Plus, ArrowRight } from 'lucide-react';
 import { formatCurrency } from '../../utils';
+<<<<<<< HEAD
 import { motion } from 'motion/react';
+=======
+import { motion } from 'framer-motion';
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
 
 interface CartUpsellProps {
   cart: { id: string; name: string; price: number; quantity: number; isCombo?: boolean; category: string; addons?: { name: string; price: number }[] }[];

@@ -3,7 +3,11 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { doc, onSnapshot } from 'firebase/firestore';
 import { db } from '../../services/firebase';
 import { Order, OrderStatus } from '../../types';
+<<<<<<< HEAD
 import { motion, AnimatePresence } from 'motion/react';
+=======
+import { motion, AnimatePresence } from 'framer-motion';
+>>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
 import { 
   ArrowLeft, Clock, CheckCircle2, Bike, Flame, 
   ChefHat, PackageCheck, MapPin, Phone
