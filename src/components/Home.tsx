@@ -1,10 +1,6 @@
 import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-<<<<<<< HEAD
 import { motion } from 'motion/react';
-=======
-import { motion } from 'framer-motion';
->>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
 import { ChefHat, Settings, ShoppingCart, Zap, ArrowRight } from 'lucide-react';
 
 const Home: React.FC = () => {
@@ -12,13 +8,10 @@ const Home: React.FC = () => {
 
     return (
         <div className="min-h-screen bg-black text-white selection:bg-yellow-500/30 font-sans overflow-x-hidden flex flex-col">
-            {/* Ambient Glow - Mais suave e dinâmico */}
             <div className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[120%] h-[500px] bg-yellow-600/10 blur-[150px] rounded-full pointer-events-none"></div>
             
             <div className="relative z-10 max-w-4xl mx-auto px-6 py-12 lg:py-20 flex flex-col items-center flex-1 w-full">
-                
-                {/* Logo Section */}
-                <header className="flex flex-col items-center text-center mb-12 md:mb-20 animate-in fade-in slide-in-from-top-6 duration-1000">
+                <header className="flex flex-col items-center text-center mb-12 md:mb-20">
                     <div className="flex items-center gap-4">
                         <div className="h-[1px] w-8 bg-gradient-to-r from-transparent to-yellow-500/50"></div>
                         <p className="text-yellow-500 text-[10px] md:text-[12px] font-black tracking-[0.6em] uppercase italic">Manaus Premium Burgers</p>
@@ -26,9 +19,7 @@ const Home: React.FC = () => {
                     </div>
                 </header>
 
-                <div className="w-full space-y-8 md:space-y-12 animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-300">
-                    
-                    {/* Hero Card com Overlay mais rico */}
+                <div className="w-full space-y-8 md:space-y-12">
                     <div className="relative group rounded-[3rem] md:rounded-[4rem] overflow-hidden border border-white/10 aspect-[4/3] md:aspect-[21/9] shadow-2xl">
                         <img 
                             src="https://i.postimg.cc/hGffpKz5/ewto5b4bl3xrdpdswhi5.jpg" 
@@ -45,15 +36,9 @@ const Home: React.FC = () => {
                                 </div>
                                 <h2 className="text-3xl md:text-5xl font-black italic uppercase tracking-tighter leading-[0.9]">O AUTÊNTICO <br/><span className="text-yellow-500">SABOR PREMIUM</span></h2>
                             </div>
-                            
-                            <div className="hidden md:flex items-center gap-3 bg-zinc-950/80 backdrop-blur-xl px-5 py-2.5 rounded-3xl border border-white/10">
-                                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.5)]"></div>
-                                <span className="text-[10px] font-black uppercase text-white tracking-widest">Loja Aberta</span>
-                            </div>
                         </div>
                     </div>
 
-                    {/* Botão Call to Action - Agora usando Link para melhor compatibilidade iOS */}
                     <Link 
                         to="/order"
                         className="w-full group relative bg-yellow-500 hover:bg-white text-black p-8 md:p-10 rounded-[2.8rem] flex items-center justify-between transition-all duration-500 active:scale-[0.97] shadow-[0_20px_50px_-15px_rgba(234,179,8,0.3)] overflow-hidden cursor-pointer touch-manipulation"
@@ -68,13 +53,9 @@ const Home: React.FC = () => {
                             </div>
                         </div>
                         <ArrowRight size={40} className="relative z-10 group-hover:translate-x-3 transition-transform duration-500" strokeWidth={3} />
-                        
-                        {/* Brilho interno no hover */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
                     </Link>
                 </div>
 
-                {/* Footer com Staff Hub Discreto */}
                 <footer className="mt-auto pt-16 w-full flex flex-col md:flex-row items-center justify-between gap-8 pb-6 border-t border-white/5">
                     <div className="flex items-center gap-5 opacity-30 hover:opacity-100 transition-all duration-700">
                         <img src="https://logopng.com.br/logos/ifood-43.png" className="h-3.5 grayscale brightness-200" alt="iFood" referrerPolicy="no-referrer" />
@@ -97,4 +78,3 @@ const Home: React.FC = () => {
 };
 
 export default Home;
-
