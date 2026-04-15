@@ -37,7 +37,6 @@ export interface StoreConfig {
   welcomeMessage?: string;
   deliveryRules?: DeliveryRule[];
   facebookPixelId?: string;
-<<<<<<< HEAD
   storeCoords?: { lat: number; lng: number };
   storeAddress?: string;
   storeNumber?: string;
@@ -46,8 +45,6 @@ export interface StoreConfig {
   deliveryFeeBase?: number;
   comboCategories?: string[];
   comboSurcharge?: number;
-=======
->>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
 }
 
 export interface Product {
@@ -59,11 +56,8 @@ export interface Product {
   category: string;
   image: string;
   isPaused: boolean;
-<<<<<<< HEAD
   fixedDrink?: string;
   drinkCategory?: string;
-=======
->>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
 }
 
 export interface OrderItem {
@@ -71,6 +65,7 @@ export interface OrderItem {
   name: string;
   qtd: number;
   price: number;
+  category?: string;
   addons?: { name: string; price: number }[];
   obsExtras?: string[];
   isCombo?: boolean;

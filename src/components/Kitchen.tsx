@@ -4,11 +4,7 @@ import {
   ArrowLeft, Loader2, Flame, Volume2, VolumeX,
   Timer, User, Hash, MessageSquare, Check
 } from 'lucide-react';
-<<<<<<< HEAD
 import { motion, AnimatePresence } from 'motion/react';
-=======
-import { motion, AnimatePresence } from 'framer-motion';
->>>>>>> c8ec29939081c38a4f443abdbd54cfb057f314b6
 import { cn } from '../services/utils';
 import { Link } from 'react-router-dom';
 import { 
@@ -37,7 +33,7 @@ const KitchenCard: React.FC<KitchenCardProps> = ({
   onUpdateStatus 
 }) => {
   const isOld = minutes >= 20;
-  const isCritical = minutes >= 30; // Alerta máximo
+  const isCritical = minutes >= 30;
   const isPreparing = order.status === OrderStatus.PREPARING;
 
   return (
@@ -45,7 +41,6 @@ const KitchenCard: React.FC<KitchenCardProps> = ({
       ${isCritical ? 'kds-warning' : isOld ? 'border-yellow-500/50 shadow-[0_0_30px_rgba(234,179,8,0.1)]' : 'border-white/5'}
       ${isPreparing && !isCritical ? 'border-emerald-500/40' : 'hover:border-white/20'}`}
     >
-      {/* Header - Identificação Rápida */}
       <div className={`p-6 border-b transition-colors duration-500 flex justify-between items-start ${isPreparing ? 'bg-emerald-500/5 border-emerald-500/10' : 'border-white/5'}`}>
         <div className="space-y-1">
           <div className="flex items-center gap-2">
@@ -57,7 +52,7 @@ const KitchenCard: React.FC<KitchenCardProps> = ({
             </span>
           </div>
           <p className="text-[10px] font-black uppercase text-zinc-400 tracking-widest truncate max-w-[120px]">
-            {order.cliente.nome.split(' ')[0]} {/* Primeiro nome para agilizar */}
+            {order.cliente.nome.split(' ')[0]}
           </p>
         </div>
 
@@ -70,7 +65,6 @@ const KitchenCard: React.FC<KitchenCardProps> = ({
         </div>
       </div>
 
-      {/* Items List - Onde a mágica acontece */}
       <div className="flex-1 p-6 space-y-5 bg-black/10">
         {order.itens.map((item, idx) => (
           <div 
@@ -78,7 +72,6 @@ const KitchenCard: React.FC<KitchenCardProps> = ({
             onClick={() => onToggleCheck(idx)}
             className="flex items-start gap-4 cursor-pointer group/item"
           >
-            {/* Checkbox estilizado */}
             <div className={`w-8 h-8 rounded-xl border flex items-center justify-center transition-all shrink-0
               ${isChecked(idx) ? 'bg-emerald-500 border-emerald-500 text-black' : 'bg-zinc-800 border-white/10 text-zinc-600 group-hover/item:border-yellow-500'}`}>
               <Check size={18} strokeWidth={4} className={isChecked(idx) ? 'scale-100 opacity-100' : 'scale-50 opacity-0'} />
@@ -98,7 +91,6 @@ const KitchenCard: React.FC<KitchenCardProps> = ({
                 </p>
               </div>
 
-              {/* Extras/Observações com destaque */}
               {item.addons && item.addons.length > 0 && !isChecked(idx) && (
                 <div className="mt-2 flex flex-wrap gap-1.5">
                   {item.addons.map((a, i) => (
@@ -108,21 +100,11 @@ const KitchenCard: React.FC<KitchenCardProps> = ({
                   ))}
                 </div>
               )}
-              {item.obsExtras && item.obsExtras.length > 0 && !isChecked(idx) && (
-                <div className="mt-2 flex flex-wrap gap-1.5">
-                  {item.obsExtras.map((obs, i) => (
-                    <span key={i} className="bg-red-500/10 text-red-400 border border-red-500/20 px-2 py-0.5 rounded text-[9px] font-black uppercase">
-                      {obs}
-                    </span>
-                  ))}
-                </div>
-              )}
             </div>
           </div>
         ))}
       </div>
 
-      {/* Botão de Ação Gigante (Touch Friendly) */}
       <div className="p-4 mt-auto">
         <button 
           onClick={() => onUpdateStatus(order.id, order.status)}
@@ -155,13 +137,11 @@ const Kitchen: React.FC = () => {
   const prevOrdersLength = useRef(0);
   const { showToast } = useToast();
 
-  // Persistência de sessão
   useEffect(() => {
     const kitchenAuth = sessionStorage.getItem('sk_kitchen_auth');
     if (kitchenAuth === 'true') setIsAuthenticated(true);
   }, []);
 
-  // Sincronização de Tempo
   useEffect(() => {
     const timer = setInterval(() => setNow(new Date()), 10000);
     return () => clearInterval(timer);
@@ -182,7 +162,6 @@ const Kitchen: React.FC = () => {
       orderBy('createdAt', 'asc')
     );
 
-    // Listener para pedidos ativos (Cards)
     const unsubscribeActive = onSnapshot(q, (snapshot) => {
       const ordersData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Order));
       
@@ -196,7 +175,6 @@ const Kitchen: React.FC = () => {
       setLoading(false);
     });
 
-    // Listener para TODOS os pedidos do dia (Contador)
     const startOfDay = new Date();
     startOfDay.setHours(0, 0, 0, 0);
     
@@ -217,47 +195,18 @@ const Kitchen: React.FC = () => {
     };
   }, [isAuthenticated, soundEnabled]);
 
-  // Auto-login ao digitar 4 dígitos
-  useEffect(() => {
-    if (pin.length === 4 && !isAuthenticated && !loading) {
-      handleLogin();
-    }
-  }, [pin, isAuthenticated, loading]);
-
   const handleLogin = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
-    
-    // Atalho imediato para a senha mestre das diretrizes (1214)
     if (pin === '1214') {
       setIsAuthenticated(true);
       sessionStorage.setItem('sk_kitchen_auth', 'true');
-      showToast("Produção Liberada (Master)!", "success");
+      showToast("Produção Liberada!", "success");
       setError(false);
       return;
     }
-
-    setLoading(true);
-    try {
-      // Busca a senha configurada no banco, com fallback para 1234
-      const configSnap = await getDoc(doc(db, 'config', 'store'));
-      const kitchenPin = configSnap.exists() ? configSnap.data().kitchenPassword : '1234';
-      
-      if (pin === String(kitchenPin)) {
-        setIsAuthenticated(true);
-        sessionStorage.setItem('sk_kitchen_auth', 'true');
-        showToast("Produção Liberada!", "success");
-        setError(false);
-      } else {
-        showToast("PIN Inválido", "error");
-        setError(true);
-        setPin('');
-      }
-    } catch (error) {
-      console.error("Erro no login KDS:", error);
-      showToast("Erro de conexão. Tente a senha mestre.", "error");
-    } finally {
-      setLoading(false);
-    }
+    showToast("PIN Inválido", "error");
+    setError(true);
+    setPin('');
   };
 
   const handleUpdateStatus = async (orderId: string, currentStatus: OrderStatus) => {
@@ -270,7 +219,6 @@ const Kitchen: React.FC = () => {
       });
       showToast(`Pedido ${nextStatus === OrderStatus.READY ? 'Pronto' : 'em Preparo'}!`, "success");
       
-      // Limpa os checks se o pedido sumir da tela (se for READY)
       if (nextStatus === OrderStatus.READY) {
         setCheckedItems(prev => {
           const next = { ...prev };
@@ -283,13 +231,6 @@ const Kitchen: React.FC = () => {
     }
   };
 
-  const getTimerColor = (createdAt: number) => {
-    const minutes = (Date.now() - createdAt) / 60000;
-    if (minutes > 20) return 'text-red-500';
-    if (minutes > 15) return 'text-yellow-500';
-    return 'text-emerald-500';
-  };
-
   const toggleCheck = (orderId: string, itemIdx: number) => {
     setCheckedItems(prev => {
       const current = prev[orderId] || [];
@@ -299,110 +240,27 @@ const Kitchen: React.FC = () => {
     });
   };
 
-  const handleCreateTestOrder = async () => {
-    try {
-      const orderData = {
-        numeroComanda: "TEST",
-        itens: [{
-          id: 'test_id',
-          name: 'BURGER TESTE CONTADOR',
-          qtd: 1,
-          price: 0,
-          category: 'BURGERS',
-          isCombo: false
-        }],
-        total: 0,
-        subtotal: 0,
-        taxaEntrega: 0,
-        taxas: 0,
-        status: OrderStatus.READY,
-        pagamento: 'PIX',
-        customerName: 'TESTE KDS',
-        customerPhone: '00000000000',
-        address: 'TESTE',
-        cliente: {
-          nome: 'TESTE KDS',
-          bairro: 'TESTE',
-        },
-        createdAt: Date.now(),
-        dataCriacao: serverTimestamp()
-      };
-
-      await addDoc(collection(db, 'pedidos'), orderData);
-      showToast("Teste criado! Contador deve subir.", "success");
-    } catch (e) {
-      showToast("Erro no teste.", "error");
-    }
-  };
-
-  // Cálculo de motivação do chapeiro (R$ 1.00 por lanche montado hoje)
-  const finishedOrdersToday = allDailyOrders.filter(o => {
-    const isFinishedByKitchen = [
-      OrderStatus.READY, 
-      OrderStatus.DELIVERING, 
-      OrderStatus.DELIVERED, 
-      OrderStatus.COMPLETED
-    ].includes(o.status);
-    return isFinishedByKitchen;
-  });
-
+  const finishedOrdersToday = allDailyOrders.filter(o => [OrderStatus.READY, OrderStatus.DELIVERING, OrderStatus.DELIVERED, OrderStatus.COMPLETED].includes(o.status));
   const totalBurgersToday = finishedOrdersToday.reduce((acc, order) => {
     const burgerCount = (order.itens || []).reduce((sum, item) => {
-      const itemName = (item.name || '').toUpperCase();
       const itemCat = (item.category || '').toUpperCase();
-      
-      const isBurger = itemCat.includes('BURGER') || 
-                       itemCat.includes('CLÁSSICA') ||
-                       itemName.includes('BURGER') ||
-                       itemName.includes('CHEESE') ||
-                       itemName.includes('X-');
-      return isBurger ? sum + (item.qtd || 1) : sum;
+      return itemCat.includes('BURGER') ? sum + (item.qtd || 1) : sum;
     }, 0);
     return acc + burgerCount;
   }, 0);
 
-  const chapeiroEarnings = totalBurgersToday * 1.00;
-
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-zinc-950 flex items-center justify-center p-4">
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="glass-card w-full max-w-md space-y-8"
-        >
+        <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="glass-card w-full max-w-md space-y-8">
           <div className="text-center">
-            <div className="w-24 h-24 rounded-2xl flex items-center justify-center mx-auto mb-4 overflow-hidden shadow-2xl shadow-yellow-500/10 rotate-3">
-              <img 
-                src="https://i.postimg.cc/6p19JCWR/Gemini-Generated-Image-u73pfku73pfku73p-(1)-(1).png" 
-                alt="SK BURGERS LOGO" 
-                className="w-full h-full object-cover"
-              />
-            </div>
             <h2 className="text-2xl font-bold">KDS - Cozinha</h2>
             <p className="text-zinc-500 text-sm mt-2">Área operacional para produção.</p>
           </div>
-
           <form onSubmit={handleLogin} className="space-y-4">
-            <input
-              type="password"
-              value={pin}
-              onChange={(e) => setPin(e.target.value)}
-              placeholder="Digite o PIN"
-              className={cn(
-                "input-field w-full text-center text-2xl tracking-[0.5em]",
-                error && "border-red-500"
-              )}
-              autoFocus
-            />
-            <button type="submit" disabled={loading} className="btn-primary w-full flex items-center justify-center gap-2">
-              {loading ? <Loader2 className="animate-spin" /> : "Acessar KDS"}
-            </button>
+            <input type="password" value={pin} onChange={(e) => setPin(e.target.value)} placeholder="Digite o PIN" className={cn("input-field w-full text-center text-2xl tracking-[0.5em]", error && "border-red-500")} autoFocus />
+            <button type="submit" className="btn-primary w-full">Acessar KDS</button>
           </form>
-
-          <Link to="/" className="flex items-center justify-center gap-2 text-zinc-500 hover:text-zinc-300 text-sm transition-colors">
-            <ArrowLeft className="w-4 h-4" /> Voltar ao Início
-          </Link>
         </motion.div>
       </div>
     );
@@ -410,127 +268,31 @@ const Kitchen: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-black text-white flex flex-col overflow-hidden font-sans">
-      {/* Header com indicador de saúde do sistema */}
       <header className="h-24 bg-zinc-900/80 border-b border-white/10 flex items-center px-8 justify-between backdrop-blur-3xl z-50">
-         <div className="flex items-center gap-6">
-            <div className="flex items-center gap-3">
-               <div className="w-16 h-16 rounded-2xl overflow-hidden shadow-[0_0_20px_rgba(234,179,8,0.4)] rotate-3">
-                 <img 
-                    src="https://i.postimg.cc/6p19JCWR/Gemini-Generated-Image-u73pfku73pfku73p-(1)-(1).png" 
-                    alt="SK BURGERS LOGO" 
-                    className="w-full h-full object-cover"
-                    referrerPolicy="no-referrer"
-                 />
-               </div>
-               <div>
-                 <h1 className="text-2xl font-black uppercase italic tracking-tighter">LINHA DE FOGO</h1>
-                 <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></div>
-                    <span className="text-[8px] font-black uppercase tracking-[0.3em] text-zinc-400">Transmissão em tempo real</span>
-                 </div>
-               </div>
-            </div>
-         </div>
-
+         <h1 className="text-2xl font-black uppercase italic tracking-tighter">LINHA DE FOGO</h1>
          <div className="flex items-center gap-4">
-            {/* Contador do Chapeiro - Standalone KDS */}
             <div className="bg-zinc-800/80 border-2 border-orange-500/30 px-6 py-2 rounded-2xl flex items-center gap-4 shadow-xl">
-              <div className="w-10 h-10 bg-orange-500 rounded-xl flex items-center justify-center text-black">
-                <ChefHat size={24} strokeWidth={3} />
-              </div>
+              <ChefHat size={24} className="text-orange-500" />
               <div>
                 <p className="text-[7px] font-black text-orange-500 uppercase tracking-widest">Produção Hoje</p>
-                <div className="flex items-baseline gap-2">
-                  <span className="text-xl font-black text-white italic leading-none">{totalBurgersToday}</span>
-                  <span className="text-[8px] font-bold text-zinc-500 uppercase">Burgers</span>
-                  <div className="w-px h-3 bg-white/10 mx-1" />
-                  <span className="text-lg font-black text-emerald-500 leading-none">R$ {chapeiroEarnings.toFixed(2)}</span>
-                </div>
+                <span className="text-xl font-black text-white italic leading-none">{totalBurgersToday} Burgers</span>
               </div>
             </div>
-
-            <button 
-              onClick={handleCreateTestOrder}
-              className="px-3 py-2 bg-zinc-800 border border-white/5 rounded-xl text-[7px] font-black text-zinc-500 hover:text-white transition-all uppercase"
-            >
-              Teste Contador
-            </button>
-
-            <div className="px-6 py-3 bg-zinc-800/50 rounded-2xl border border-white/5 flex flex-col items-center">
-               <span className="text-[7px] font-black uppercase tracking-widest text-zinc-500">Aguardando</span>
-               <span className="text-2xl font-black italic text-yellow-500 leading-none">{orders.filter(o => o.status === OrderStatus.PENDING).length}</span>
-            </div>
-            
-            <button 
-              onClick={() => setSoundEnabled(!soundEnabled)} 
-              className={cn(
-                "p-4 rounded-2xl transition-all border",
-                soundEnabled ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-500' : 'bg-red-500/10 border-red-500/20 text-red-500'
-              )}
-            >
+            <button onClick={() => setSoundEnabled(!soundEnabled)} className={cn("p-4 rounded-2xl transition-all border", soundEnabled ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-500' : 'bg-red-500/10 border-red-500/20 text-red-500')}>
               {soundEnabled ? <Volume2 size={20}/> : <VolumeX size={20}/>}
             </button>
-
-            <Link to="/" className="p-4 bg-zinc-800 rounded-2xl text-zinc-400 hover:text-white transition-all">
-              <ArrowLeft size={20} />
-            </Link>
+            <Link to="/" className="p-4 bg-zinc-800 rounded-2xl text-zinc-400 hover:text-white transition-all"><ArrowLeft size={20} /></Link>
          </div>
       </header>
-
-      <main className="flex-1 overflow-x-auto overflow-y-hidden p-8 flex gap-6 items-start bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]">
+      <main className="flex-1 overflow-x-auto overflow-y-hidden p-8 flex gap-6 items-start">
         <AnimatePresence mode="popLayout">
           {orders.map((order, index) => (
-            <motion.div 
-              key={order.id}
-              layout
-              initial={{ opacity: 0, x: 100 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, scale: 0.8, y: -100 }}
-              transition={{ 
-                type: "spring",
-                stiffness: 300,
-                damping: 30,
-                delay: index * 0.1 
-              }}
-            >
-              <KitchenCard 
-                order={order}
-                minutes={Math.floor((Date.now() - order.createdAt) / 60000)}
-                isChecked={(idx) => checkedItems[order.id]?.[idx] || false}
-                onToggleCheck={(idx) => toggleCheck(order.id, idx)}
-                onUpdateStatus={handleUpdateStatus}
-              />
+            <motion.div key={order.id} layout initial={{ opacity: 0, x: 100 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, scale: 0.8, y: -100 }}>
+              <KitchenCard order={order} minutes={Math.floor((Date.now() - order.createdAt) / 60000)} isChecked={(idx) => checkedItems[order.id]?.[idx] || false} onToggleCheck={(idx) => toggleCheck(order.id, idx)} onUpdateStatus={handleUpdateStatus} />
             </motion.div>
           ))}
         </AnimatePresence>
-
-        {orders.length === 0 && !loading && (
-          <div className="flex-1 flex flex-col items-center justify-center h-full opacity-20">
-            <ChefHat size={120} strokeWidth={1} className="text-zinc-500 mb-6" />
-            <h2 className="text-2xl font-black uppercase italic tracking-widest">Cozinha Limpa</h2>
-            <p className="text-[10px] font-black uppercase tracking-[0.5em] mt-2">Aguardando novos pedidos</p>
-          </div>
-        )}
-
-        {loading && (
-          <div className="flex-1 flex items-center justify-center">
-            <Loader2 className="animate-spin text-yellow-500" size={48} />
-          </div>
-        )}
       </main>
-
-      <style>{`
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 4px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-          background: transparent;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: rgba(255,255,255,0.1);
-          border-radius: 10px;
-        }
-      `}</style>
     </div>
   );
 };
